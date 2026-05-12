@@ -1,19 +1,19 @@
 package shall.domain;
 
-public class Vendedor extends Funcionario{
+public class Seller extends Employee {
     protected double commission;
     public double valorTotalVenda =0;
     private final int selleId =2;
 
-    public Vendedor() {}
+    public Seller() {}
 
-    public Vendedor(String name, int age) {
-        super(name, age, "Vendedor");
+    public Seller(String name, int age) {
+        super(name, age, "Seeler");
         this.salary = 1200;
     }
 
-    public Vendedor(String name, int age, String operarioAdress) {
-        super(name, age, "Vendedor", operarioAdress);
+    public Seller(String name, int age, String operarioAdress) {
+        super(name, age, "Seeler", operarioAdress);
     }
 
     public double getCommission() {
@@ -32,24 +32,29 @@ public class Vendedor extends Funcionario{
         this.valorTotalVenda = valorTotalVenda;
     }
 
-    public void peekWallet(){ System.out.println("Carteira do vendedor: " +super.getWallet()); }
+    public void peekWallet(){ System.out.println("Wallet of seeler: " +super.getWallet()); }
+
+    @Override
+    public void save(){
+        System.out.println("Saving Seller...");
+    }
 
     @Override
     public void print() {
-        System.out.println("Imprimindo dados do Vendedor");
+        System.out.println("Print data of seller");
         System.out.println(this);
     }
 
     @Override
     public void toPresent() {
-        System.out.println("Olá, meu nome é " + this.name + " e sou um " + this.PeopleType.getRelatorioNome() +" da loja");
+        System.out.println("Hello, my name is " + this.name + " I am a " + this.PeopleType.getReportName() +" of store");
     }
 
     @Override
     public String toString() {
-        return "Vendedor{" +
+        return "Seeler{" +
                 "commission=" + commission +
-                ", valorTotalVenda=" + valorTotalVenda +
+                ", totalSalesValue=" + valorTotalVenda +
                 ", selleId=" + selleId +
                 super.toString() +'}';
     }

@@ -1,19 +1,19 @@
 package shall.domain;
 
-public abstract class Funcionario extends Pessoa{
+public abstract class Employee extends Person {
     protected String position;
     protected double salary;
     protected double wallet;
     protected String operarioAdress ="Endereço não informado";
 
-    public Funcionario(){}
+    public Employee(){}
 
-    public Funcionario(String name, int age, String position){
+    public Employee(String name, int age, String position){
         super(name, age);
         this.position = position;
     }
 
-    public Funcionario(String name, int age, String position, String operarioAdress) {
+    public Employee(String name, int age, String position, String operarioAdress) {
         super(name, age);
         this.position =position;
         this.operarioAdress =operarioAdress;
@@ -21,7 +21,7 @@ public abstract class Funcionario extends Pessoa{
 
     @Override
     public void toPresent() {
-        System.out.println("Olá, meu nome é " +this.name +" e sou um " +this.PeopleType.getRelatorioNome() +" da loja.");
+        System.out.println("Olá, meu nome é " +this.name +" e sou um " +this.PeopleType.getReportName() +" da loja.");
     }
 
     @Override
@@ -56,6 +56,11 @@ public abstract class Funcionario extends Pessoa{
 
     public double getSalary() {
         return salary;
+    }
+
+    @Override
+    public void save(){
+        System.out.println("Saving employee...");
     }
 
     public void setSalary(double salary) {
