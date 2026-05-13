@@ -4,7 +4,7 @@ public abstract class Employee extends Person {
     protected String position;
     protected double salary;
     protected double wallet;
-    protected String operarioAdress ="Endereço não informado";
+    protected String operarioAdress ="No Information";
 
     public Employee(){}
 
@@ -26,7 +26,7 @@ public abstract class Employee extends Person {
 
     @Override
     public void print() {
-        System.out.println("Imprimindo os dados do funcionário...");
+        System.out.println("Print data of Client...");
         System.out.println(this);
     }
 
@@ -73,7 +73,7 @@ public abstract class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Funcionario{" +
+        return "Employee{" +
                 "position='" + position + '\'' +
                 ", salary=" + salary +
                 ", wallet=" + wallet +
