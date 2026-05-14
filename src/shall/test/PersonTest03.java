@@ -14,7 +14,7 @@ public class PersonTest03 {
         Manager manager =new Manager("João", 30, "");
         Seller seller =new Seller("Marchello", 25);
         Client client =new Client("Maria", 28, TypePayment.CREDIT);
-        BigDecimal bgDecimal = new BigDecimal("1_280");
+        BigDecimal bgDecimal = new BigDecimal("1280");
 
         client.setWallet(bgDecimal);
 
