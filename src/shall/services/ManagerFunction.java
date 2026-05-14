@@ -3,6 +3,9 @@ package shall.services;
 import shall.domain.Manager;
 import shall.domain.Seller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ManagerFunction {
     // Funções para subclasse Funcionário, somente essa subclasse
 
@@ -12,30 +15,43 @@ public class ManagerFunction {
 
     /***
      * Efetua o pagamento de todos os vendedores
-     * @param pessoa objeto Vendedor
+     * @param employee objeto Vendedor
      * @param manager objeto Gerente
      */
-    public static void paymentSeller(Seller pessoa, Manager manager){
-        System.out.println("The manager " + manager.getName() +" paying the salary to " +pessoa.getName() +" R$" +pessoa.getSalary());
+    public static void paymentSeller(Seller employee, Manager manager) {
 
-        if(pessoa.getValorTotalVenda() > 0){
-            double salarioComissao = pessoa.valorTotalVenda *0.03;
-            pessoa.setWallet(pessoa.getSalary() +salarioComissao);
-            System.out.println("Salary payid with commission " +pessoa.getWallet());
+        System.out.println("The manager " + manager.getName() + " is paying the salary to " + employee.getName() + " R$" + employee.getSalary());
+
+        if (employee.getTotalSalesValue() != null && employee.getTotalSalesValue().compareTo(BigDecimal.ZERO) > 0) {
+
+            BigDecimal commissionRate = new BigDecimal("0.03");
+            BigDecimal commissionAmount = employee.getTotalSalesValue()
+                    .multiply(commissionRate)
+                    .setScale(2, RoundingMode.HALF_UP);
+
+            BigDecimal totalPayment = employee.getSalary().add(commissionAmount);
+
+
+            employee.setWallet(employee.getWallet().add(totalPayment));
+
+            System.out.println("Salary paid with commission: R$" + totalPayment);
+            System.out.println("New wallet balance: R$" + employee.getWallet());
             return;
         }
-        pessoa.setWallet(pessoa.getWallet() + pessoa.getSalary());
-        System.out.println("Salary payid without commission " +pessoa.getWallet());
+
+        employee.setWallet(employee.getWallet().add(employee.getSalary()));
+        System.out.println("Salary paid without commission: R$" + employee.getSalary());
+        System.out.println("New wallet balance: R$" + employee.getWallet());
     }
 
     /***
      * Efetua o pagamento do gerente
      * @param manager gerente irá efetuar o pagamento do salário
-     * @param pessoa gerente que irá receber o salário
+     * @param employee gerente que irá receber o salário
      */
-    public static void paymentManager(Manager manager, Manager pessoa){
-        System.out.println("The manager " + manager.getName() +" paying the salary for " +pessoa.getName() +" R$" +pessoa);
-        pessoa.setWallet(pessoa.getWallet() + pessoa.getSalary());
+    public static void paymentManager(Manager manager, Manager employee) {
+        System.out.println("The manager " + manager.getName() +" paying the salary for " +employee.getName() +" R$" +employee.getSalary());
+        employee.setWallet(employee.getWallet().add(employee.getSalary()));
     }
 
 }

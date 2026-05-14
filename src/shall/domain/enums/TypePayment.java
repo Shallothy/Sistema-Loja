@@ -1,17 +1,26 @@
 package shall.domain.enums;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public enum TypePayment {
     MONEY("Cash", 1){
         @Override
-        public double calculateDiscount(double value) { return value*0.25; }
+        public BigDecimal calculateDiscount(BigDecimal value) {
+            return value.multiply(new BigDecimal("0.25")).setScale(2, RoundingMode.HALF_UP);
+        }
     },
     DEBIT("Debit", 2){
         @Override
-        public double calculateDiscount(double value) { return value*0.15; }
+        public BigDecimal calculateDiscount(BigDecimal value) {
+            return value.multiply(new BigDecimal("0.15")).setScale(2, RoundingMode.HALF_UP);
+        }
     },
     CREDIT("Credit", 3){
         @Override
-        public double calculateDiscount(double value) { return value*0.05; }
+        public BigDecimal calculateDiscount(BigDecimal value) {
+            return value.multiply(new BigDecimal("0.05")).setScale(2, RoundingMode.HALF_UP);
+        }
     };
     String paymentType;
     int id;
@@ -21,16 +30,16 @@ public enum TypePayment {
         this.id = id;
     }
 
-    public TypePayment pagamentoRelatorio(String pagamento){
-        for(TypePayment typePayment : TypePayment.values()){
-            if(typePayment.equals(pagamento)){
+    public static TypePayment paymentReport(String paymentName) {
+        for (TypePayment typePayment : TypePayment.values()) {
+            if (typePayment.getPaymentType().equalsIgnoreCase(paymentName)) {
                 return typePayment;
             }
         }
         return null;
     }
 
-    public abstract double calculateDiscount(double value);
+    public abstract BigDecimal calculateDiscount(BigDecimal value);
 
     public String getPaymentType() {
         return paymentType;

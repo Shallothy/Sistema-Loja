@@ -4,7 +4,10 @@ import shall.domain.Client;
 import shall.domain.Person;
 import shall.domain.Seller;
 import shall.domain.enums.TypePayment;
+import shall.error.ClassException;
+import shall.error.InvalidNumberException;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ClientFunction {
@@ -14,11 +17,11 @@ public class ClientFunction {
      * Método para a efetuar a compra do cliente
      * @param pessoa objeto Cliente
      * @param item uma String item a ser comprado pelo cliente (pessoa)
-     * @param valor um double representando o valor do item
+     * @param value um double representando o valor do item
      * @return dependendo da quantidade de dinheiro na carteira retorna um true ou false, simbolizando a compra do item
      */
-    public static boolean buy(Client pessoa, String item, double valor, TypePayment typePayment) {
-        boolean isPago = Payment.payment(typePayment, pessoa, valor);
+    public static boolean buy(Client pessoa, String item, BigDecimal value, TypePayment typePayment) {
+        boolean isPago = Payment.payment(typePayment, pessoa, value);
 
         if(isPago) {
             try {;
@@ -41,7 +44,7 @@ public class ClientFunction {
         System.out.print("Enter the custurmer's name: ");
         person.setName(input.nextLine());
         System.out.print("Enter the custurmer's age: ");
-        person.setAge(input.nextInt());
+        person.setAge(Integer.parseInt(input.nextLine()));
 
         return new Client(person.getName(), person.getAge());
     }
@@ -68,16 +71,23 @@ public class ClientFunction {
      */
     public static boolean addWallet(Client client, Scanner input) {
         System.out.println("Enter the amount to be added in the custumer's virtual wallet (limit de R$50.000,00): ");
-        String valorString = input.nextLine().replace(",",".");
-        double valor = Double.parseDouble(valorString);
+        String valueString = input.nextLine()
+                .replace(",",".")
+                .replace("_","");
+        try {
+            BigDecimal valor = new BigDecimal(valueString);
 
-        if (valor > 0 && valor <= 50000) {
-            client.setWallet(client.getWallet()+valor);
-            System.out.println("Money added successfully");
+            if (valor.compareTo(BigDecimal.ZERO) > 0 && valor.compareTo(new BigDecimal("50000.00")) <= 0) {
+                client.setWallet(client.getWallet().add(valor));
+                System.out.println("Money added successfully");
 
-            return true;
+                return true;
+            }
+            System.out.println("Invalued value. The value must be greates than 0 and less than or equal R$50,000.00");
+
+        } catch (NumberFormatException e) {
+            throw new ClassException("Invalid number format: " + e.getMessage());
         }
-        System.out.println("Invalued value. The value must be greates than 0 and less than or equal R$50,000.00");
         return false;
     }
 

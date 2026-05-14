@@ -1,83 +1,56 @@
 package shall.domain;
 
-public abstract class Employee extends Person {
+import shall.domain.enums.EnumPerson;
+import shall.services.impl.Benefits;
+import shall.services.impl.Taxable;
+
+import java.math.BigDecimal;
+
+public abstract class Employee extends Person implements Taxable, Benefits {
     protected String position;
-    protected double salary;
-    protected double wallet;
-    protected String operarioAdress ="No Information";
+    private BigDecimal salary = BigDecimal.ZERO;
+    private BigDecimal wallet = BigDecimal.ZERO;
+    private String employeeAddress = "No Information";
 
     public Employee(){}
 
     public Employee(String name, int age, String position){
-        super(name, age);
+        super(name, age, EnumPerson.PERSON_EMPLOYEE);
         this.position = position;
     }
 
-    public Employee(String name, int age, String position, String operarioAdress) {
-        super(name, age);
-        this.position =position;
-        this.operarioAdress =operarioAdress;
+    public Employee(String name, int age, String position, String employeeAddress) {
+        super(name, age, EnumPerson.PERSON_EMPLOYEE);
+        this.position = position;
+        this.employeeAddress = employeeAddress;
     }
+
+    public BigDecimal getSalary() { return salary; }
+
+    public void setSalary(BigDecimal salary) {
+        BigDecimal minSalary = new BigDecimal("1280.87");
+        BigDecimal maxLimit = new BigDecimal("10000.00");
+
+        if (minSalary.compareTo(salary) <= 0 && maxLimit.compareTo(salary) >= 0) {
+            this.salary = minSalary;
+            return;
+        }
+
+            this.salary = salary;
+    }
+
+    public BigDecimal getWallet() { return wallet; }
+
+    public void setWallet(BigDecimal wallet) { this.wallet = wallet; }
 
     @Override
     public void toPresent() {
-        System.out.println("Olá, meu nome é " +this.name +" e sou um " +this.PeopleType.getReportName() +" da loja.");
+        System.out.println("Hello, my name is " + this.name + " I am a(n) " +EnumPerson.PERSON_EMPLOYEE.getReportName() +" of store");
     }
 
     @Override
     public void print() {
         System.out.println("Print data of Client...");
         System.out.println(this);
-    }
-
-    public double getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(double wallet) {
-        this.wallet = wallet;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getOperarioAdress() {
-        return operarioAdress;
-    }
-
-    public void setOperarioAdress(String operarioAdress) {
-        this.operarioAdress = operarioAdress;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    @Override
-    public void save(){
-        System.out.println("Saving employee...");
-    }
-
-    public void setSalary(double salary) {
-        if(this.salary <= 1280.87) {
-            this.salary = 1280.87;
-            return;
-        }
-        this.salary = salary;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "position='" + position + '\'' +
-                ", salary=" + salary +
-                ", wallet=" + wallet +
-                ", operarioAdress='" + operarioAdress + '\'' +
-                super.toString() +'}';
     }
 }

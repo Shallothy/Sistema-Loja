@@ -13,7 +13,7 @@ public enum EnumPerson {
     // Função para imprimir o relatório do tipo de pessoa, comparando o nome do relatório com o nome do tipo de pessoa.
     public static EnumPerson imprimirRelatorioPessoa(String relatorioNome){
         for(EnumPerson typePerson : EnumPerson.values()){
-            if(typePerson.equals(relatorioNome)){
+            if(typePerson.getReportName().equalsIgnoreCase(relatorioNome)){
                 return typePerson;
             }
         }
