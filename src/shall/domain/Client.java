@@ -55,7 +55,7 @@ public class Client extends Person {
 
     @Override
     public void toPresent() {
-
+        System.out.println("Hello, my name is " + this.name + " I am a(n) " +EnumPerson.PERSON_CLIENT.getReportName() +" of store");
     }
 
     @Override

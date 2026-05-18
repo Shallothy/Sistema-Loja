@@ -25,7 +25,7 @@ public class ClientFunction {
 
         if(isPago) {
             try {;
-                System.out.println(item + " was purscharsed!");
+                System.out.println(item + " was purscharsed! value");
             } catch (Exception e) {
                 e.printStackTrace();
             }
