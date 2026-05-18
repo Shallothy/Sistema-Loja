@@ -3,9 +3,8 @@ package shall.test;
 import shall.domain.Client;
 import shall.domain.Manager;
 import shall.domain.Seller;
-import shall.error.ClassException;
 import shall.error.InvalidNumberException;
-import shall.services.*;
+import shall.services.ClientFunction;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -18,12 +17,12 @@ public class PersonTest02 {
         Seller seller =new Seller("Marchelo", 25);
 
         pessoa.setRegistration(1234);
-//        seller.setSalary(new BigDecimal("1280"));
-//        try {
-//            manager.setSalary(new BigDecimal("2000"));
-//        } catch (NumberFormatException e) {
-//            throw new InvalidNumberException();
-//        }
+        seller.setSalary(new BigDecimal("1280"));
+        try {
+            manager.setSalary(new BigDecimal("2000"));
+        } catch (NumberFormatException e) {
+            throw new InvalidNumberException();
+        }
         ClientFunction.addWallet(pessoa, input);
 
         System.out.println(seller);

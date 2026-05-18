@@ -1,17 +1,16 @@
 package shall.test;
 
-import shall.domain.Client;
-import shall.error.ClassException;
-import java.io.FileNotFoundException;
+import shall.domain.Seller;
+
+import java.math.BigDecimal;
 
 public class PersonTest05 {
     public static void main(String[] args) {
-        Client client = new Client("Ratiello", 21, "Rui Barbosa 01");
+        Seller seller = new Seller("Sellsom", 28);
+        seller.punchClock();
+        seller.setSalary(new BigDecimal("1700.59"));
+        seller.healthPlan();
 
-        try {
-            client.save();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println(seller.getSalary());
     }
 }
